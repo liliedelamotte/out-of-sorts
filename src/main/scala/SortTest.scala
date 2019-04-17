@@ -1,6 +1,4 @@
-import java.util
-
-import scala.annotation.tailrec
+import scala.util.Random
 // ldelamotte17@georgefox.edu
 // Assignment 8
 // 2019-04-26
@@ -9,13 +7,15 @@ class SortTest {
 
   object quicksort {
 
-    def quickSortRecursive(values:Array[Int]) = {
+    /** performs quicksort with recursion given an array of values */
+    def quickSortRecursive(values:Array[Int]){
 
       quickSortRecursiveLogic(values, 0, values.length - 1)
 
     }
 
-    def quickSort(values:Array[Int]) = {
+    /** performs quicksort without recursion given an array of values */
+    def quickSort(values:Array[Int]){
 
       var stack = Seq[(Int, Int)]()
       var low = 0
@@ -28,7 +28,7 @@ class SortTest {
         high = stack.head._2
         stack = stack.tail
 
-        var pivot = partition(values, low, high)
+        val pivot = partition(values, low, high)
 
         if (pivot - 1 > low) {
           stack +:= (low, pivot - 1)
@@ -38,12 +38,10 @@ class SortTest {
           stack +:= (pivot + 1, high)
         }
       }
-
-
     }
 
     /** performs insertion sort given an array of values */
-    def insertionSort(values:Array[Int]) = {
+    def insertionSort(values:Array[Int]){
 
       // iterates through every element and moves
       // it until it is in the right place
@@ -100,6 +98,74 @@ class SortTest {
       i + 1
 
     }
+  }
+
+  def main(args: Array[String]): Unit = {
+
+    val random = new Random
+    var currentTime = System.currentTimeMillis()
+
+    val values1000 = new Array[Int](1000)
+    val values2000 = new Array[Int](2000)
+    val values4000 = new Array[Int](4000)
+
+    for (i <- 0 until 1000) {
+      values1000(i) = random.nextInt(1000)
+    }
+
+    for (i <- 0 until 2000) {
+      values2000(i) = random.nextInt(2000)
+    }
+
+    for (i <- 0 until 4000) {
+      values4000(i) = random.nextInt(4000)
+    }
+
+    /* runs of length of 1000 */
+    currentTime = System.currentTimeMillis()
+    quicksort.quickSortRecursive(values1000.clone())
+    println("quickSortRecursive on 1000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+
+    currentTime = System.currentTimeMillis()
+    quicksort.quickSort(values1000.clone())
+    println("quickSort on 1000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+
+    currentTime = System.currentTimeMillis()
+    quicksort.insertionSort(values1000.clone())
+    println("insertionSort on 1000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    println("-------------------------------------------------\n\n")
+
+
+    /* runs on length of 2000 */
+    currentTime = System.currentTimeMillis()
+    quicksort.quickSortRecursive(values2000.clone())
+    println("quickSortRecursive on 2000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+
+    currentTime = System.currentTimeMillis()
+    quicksort.quickSort(values2000.clone())
+    println("quickSort on 2000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+
+    currentTime = System.currentTimeMillis()
+    quicksort.insertionSort(values2000.clone())
+    println("insertionSort on 2000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    println("-------------------------------------------------\n\n")
+
+
+    /* runs on length of 4000 */
+    currentTime = System.currentTimeMillis()
+    quicksort.quickSortRecursive(values4000.clone())
+    println("quickSortRecursive on 4000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+
+    currentTime = System.currentTimeMillis()
+    quicksort.quickSort(values4000.clone())
+    println("quickSort on 4000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+
+    currentTime = System.currentTimeMillis()
+    quicksort.insertionSort(values4000.clone())
+    println("insertionSort on 4000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    println("-------------------------------------------------")
+
+
   }
 }
 
