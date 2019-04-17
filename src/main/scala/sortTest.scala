@@ -3,19 +3,19 @@ import scala.util.Random
 // Assignment 8
 // 2019-04-26
 
-class SortTest {
+object sortTest {
 
   object quicksort {
 
     /** performs quicksort with recursion given an array of values */
-    def quickSortRecursive(values:Array[Int]){
+    def quickSortRecursive(values: Array[Int]) {
 
       quickSortRecursiveLogic(values, 0, values.length - 1)
 
     }
 
     /** performs quicksort without recursion given an array of values */
-    def quickSort(values:Array[Int]){
+    def quickSort(values: Array[Int]) {
 
       var stack = Seq[(Int, Int)]()
       var low = 0
@@ -34,14 +34,14 @@ class SortTest {
           stack +:= (low, pivot - 1)
         }
 
-        if (pivot +1 < high) {
+        if (pivot + 1 < high) {
           stack +:= (pivot + 1, high)
         }
       }
     }
 
     /** performs insertion sort given an array of values */
-    def insertionSort(values:Array[Int]){
+    def insertionSort(values: Array[Int]) {
 
       // iterates through every element and moves
       // it until it is in the right place
@@ -61,7 +61,7 @@ class SortTest {
     }
 
     /** performs quick sort given an array of values */
-    def quickSortRecursiveLogic(values:Array[Int], low:Int, high:Int){
+    def quickSortRecursiveLogic(values: Array[Int], low: Int, high: Int) {
 
       val index = partition(values, low, high)
 
@@ -76,8 +76,8 @@ class SortTest {
     }
 
     /** divides the array at a pivot point where the left side contains elements
-    less than the pivot and the right side contains elements higher than the pivot */
-    def partition(values:Array[Int], low:Int, high:Int):Int = {
+      * less than the pivot and the right side contains elements higher than the pivot */
+    def partition(values: Array[Int], low: Int, high: Int): Int = {
 
       val pivot = values(high)
       var i = low - 1
@@ -98,7 +98,8 @@ class SortTest {
       i + 1
 
     }
-  }
+
+    }
 
   def main(args: Array[String]): Unit = {
 
@@ -123,50 +124,82 @@ class SortTest {
 
     /* runs of length of 1000 */
     currentTime = System.currentTimeMillis()
-    quicksort.quickSortRecursive(values1000.clone())
-    println("quickSortRecursive on 1000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    for (i <- values1000) {
+      print(values1000(i) + ", ")
+    }
+    println()
+    val scalaSort1000 = values1000.clone()
+    scalaSort1000.sortWith(_ < _)
+    for (i <- scalaSort1000) {
+      print(scalaSort1000(i) + ", ")
+    }
+    println()
+    println("scala quicksort on 1000 total time: " + (System.currentTimeMillis() - currentTime))
 
+    val quickSortRecursive1000 = values1000.clone()
     currentTime = System.currentTimeMillis()
-    quicksort.quickSort(values1000.clone())
-    println("quickSort on 1000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    quicksort.quickSortRecursive(quickSortRecursive1000)
+    println("quickSortRecursive on 1000 total time: " + (System.currentTimeMillis() - currentTime))
 
+    val quickSort1000 = values1000.clone()
     currentTime = System.currentTimeMillis()
-    quicksort.insertionSort(values1000.clone())
-    println("insertionSort on 1000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    quicksort.quickSort(quickSort1000)
+    println("quickSort on 1000 total time: " + (System.currentTimeMillis() - currentTime))
+
+    val insertionSort1000 = values1000.clone()
+    currentTime = System.currentTimeMillis()
+    quicksort.insertionSort(insertionSort1000)
+    println("insertionSort on 1000 total time: " + (System.currentTimeMillis() - currentTime))
     println("-------------------------------------------------\n\n")
 
 
     /* runs on length of 2000 */
+    val scalaSort2000 = values2000.clone()
     currentTime = System.currentTimeMillis()
-    quicksort.quickSortRecursive(values2000.clone())
-    println("quickSortRecursive on 2000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    scalaSort2000.sortWith(_ < _)
+    println("scala quicksort on 2000 total time: " + (System.currentTimeMillis() - currentTime))
 
+    val quickSortRecursive2000 = values2000.clone()
     currentTime = System.currentTimeMillis()
-    quicksort.quickSort(values2000.clone())
-    println("quickSort on 2000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    quicksort.quickSortRecursive(quickSortRecursive2000)
+    println("quickSortRecursive on 2000 total time: " + (System.currentTimeMillis() - currentTime))
 
+    val quickSort2000 = values2000.clone()
     currentTime = System.currentTimeMillis()
-    quicksort.insertionSort(values2000.clone())
-    println("insertionSort on 2000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    quicksort.quickSort(quickSort2000)
+    println("quickSort on 2000 total time: " + (System.currentTimeMillis() - currentTime))
+
+    val insertionSort2000 = values2000.clone()
+    currentTime = System.currentTimeMillis()
+    quicksort.insertionSort(insertionSort2000)
+    println("insertionSort on 2000 total time: " + (System.currentTimeMillis() - currentTime))
     println("-------------------------------------------------\n\n")
 
 
     /* runs on length of 4000 */
+    val scalaSort4000 = values4000.clone()
     currentTime = System.currentTimeMillis()
-    quicksort.quickSortRecursive(values4000.clone())
-    println("quickSortRecursive on 4000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    scalaSort4000.sortWith(_ < _)
+    println("scala quicksort on 4000 total time: " + (System.currentTimeMillis() - currentTime))
 
+    val quickSortRecursive4000 = values4000.clone()
     currentTime = System.currentTimeMillis()
-    quicksort.quickSort(values4000.clone())
-    println("quickSort on 4000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
+    quicksort.quickSortRecursive(quickSortRecursive4000)
+    println("quickSortRecursive on 4000 total time: " + (System.currentTimeMillis() - currentTime))
 
+    val quickSort4000 = values4000.clone()
     currentTime = System.currentTimeMillis()
-    quicksort.insertionSort(values4000.clone())
-    println("insertionSort on 4000 total time: " + (System.currentTimeMillis() - currentTime) / 1000 + "\n")
-    println("-------------------------------------------------")
+    quicksort.quickSort(quickSort4000)
+    println("quickSort on 4000 total time: " + (System.currentTimeMillis() - currentTime))
 
+    val insertionSort4000 = values4000.clone()
+    currentTime = System.currentTimeMillis()
+    quicksort.insertionSort(insertionSort4000)
+    println("insertionSort on 4000 total time: " + (System.currentTimeMillis() - currentTime))
+    println("-------------------------------------------------\n\n")
 
   }
+
 }
 
 
