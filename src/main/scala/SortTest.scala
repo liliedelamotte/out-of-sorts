@@ -11,29 +11,68 @@ class SortTest {
 
     def quickSortRecursive(values:Array[Int]) = {
 
-      recursiveQuickSort(values, 0, values.length - 1)
+      quickSortRecursiveLogic(values, 0, values.length - 1)
 
     }
 
     def quickSort(values:Array[Int]) = {
 
+      var stack = Seq[(Int, Int)]()
+      var low = 0
+      var high = values.length - 1
+
+      stack +:= (low, high)
+
+      while (stack.nonEmpty) {
+        low = stack.head._1
+        high = stack.head._2
+        stack = stack.tail
+
+        var pivot = partition(values, low, high)
+
+        if (pivot - 1 > low) {
+          stack +:= (low, pivot - 1)
+        }
+
+        if (pivot +1 < high) {
+          stack +:= (pivot + 1, high)
+        }
+      }
+
+
     }
 
+    /** performs insertion sort given an array of values */
     def insertionSort(values:Array[Int]) = {
 
+      // iterates through every element and moves
+      // it until it is in the right place
+      for (i <- 1 until values.length) {
+
+        val key = values(i)
+        var j = i - 1
+
+        while (j >= 0 && key < values(j)) {
+          values(j + 1) = values(j)
+          j -= 1
+        }
+
+        values(j + 1) = key
+
+      }
     }
 
     /** performs quick sort given an array of values */
-    def recursiveQuickSort(values:Array[Int], low:Int, high:Int){
+    def quickSortRecursiveLogic(values:Array[Int], low:Int, high:Int){
 
       val index = partition(values, low, high)
 
       if (low < index - 1) {
-        recursiveQuickSort(values, low, index - 1)
+        quickSortRecursiveLogic(values, low, index - 1)
       }
 
       if (high > index) {
-        recursiveQuickSort(values, index, high)
+        quickSortRecursiveLogic(values, index, high)
       }
 
     }
